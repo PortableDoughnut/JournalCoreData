@@ -13,8 +13,8 @@ struct JournalCoreDataApp: App {
 
     var body: some Scene {
         WindowGroup {
-            ContentView()
-                .environment(\.managedObjectContext, persistenceController.container.viewContext)
+            EntriesView()
+				.environment(\.managedObjectContext, persistenceController.container.viewContext)
         }
     }
 }
