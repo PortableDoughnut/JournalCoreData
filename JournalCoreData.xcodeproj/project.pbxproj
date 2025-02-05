@@ -7,8 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		63B8FE092D51115E00CF98A7 /* Entry+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63B8FE072D51115E00CF98A7 /* Entry+CoreDataClass.swift */; };
-		63B8FE0A2D51115E00CF98A7 /* Entry+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63B8FE082D51115E00CF98A7 /* Entry+CoreDataProperties.swift */; };
+		6348C5402D53B5290061FFE0 /* Entry+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6348C53D2D53B5290061FFE0 /* Entry+CoreDataProperties.swift */; };
+		6348C5412D53B5290061FFE0 /* Journal+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6348C53E2D53B5290061FFE0 /* Journal+CoreDataClass.swift */; };
+		6348C5422D53B5290061FFE0 /* Journal+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6348C53F2D53B5290061FFE0 /* Journal+CoreDataProperties.swift */; };
+		6348C5432D53B5290061FFE0 /* Entry+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6348C53C2D53B5290061FFE0 /* Entry+CoreDataClass.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -29,11 +31,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		6348C53C2D53B5290061FFE0 /* Entry+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Entry+CoreDataClass.swift"; sourceTree = "<group>"; };
+		6348C53D2D53B5290061FFE0 /* Entry+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Entry+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		6348C53E2D53B5290061FFE0 /* Journal+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Journal+CoreDataClass.swift"; sourceTree = "<group>"; };
+		6348C53F2D53B5290061FFE0 /* Journal+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Journal+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		63B8FDD22D510FE000CF98A7 /* JournalCoreData.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = JournalCoreData.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		63B8FDE92D510FE200CF98A7 /* JournalCoreDataTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = JournalCoreDataTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		63B8FDF32D510FE200CF98A7 /* JournalCoreDataUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = JournalCoreDataUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		63B8FE072D51115E00CF98A7 /* Entry+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Entry+CoreDataClass.swift"; sourceTree = "<group>"; };
-		63B8FE082D51115E00CF98A7 /* Entry+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Entry+CoreDataProperties.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -95,8 +99,10 @@
 		63B8FDC92D510FE000CF98A7 = {
 			isa = PBXGroup;
 			children = (
-				63B8FE072D51115E00CF98A7 /* Entry+CoreDataClass.swift */,
-				63B8FE082D51115E00CF98A7 /* Entry+CoreDataProperties.swift */,
+				6348C53C2D53B5290061FFE0 /* Entry+CoreDataClass.swift */,
+				6348C53D2D53B5290061FFE0 /* Entry+CoreDataProperties.swift */,
+				6348C53E2D53B5290061FFE0 /* Journal+CoreDataClass.swift */,
+				6348C53F2D53B5290061FFE0 /* Journal+CoreDataProperties.swift */,
 				63B8FDD42D510FE000CF98A7 /* JournalCoreData */,
 				63B8FDEC2D510FE200CF98A7 /* JournalCoreDataTests */,
 				63B8FDF62D510FE200CF98A7 /* JournalCoreDataUITests */,
@@ -258,8 +264,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				63B8FE092D51115E00CF98A7 /* Entry+CoreDataClass.swift in Sources */,
-				63B8FE0A2D51115E00CF98A7 /* Entry+CoreDataProperties.swift in Sources */,
+				6348C5402D53B5290061FFE0 /* Entry+CoreDataProperties.swift in Sources */,
+				6348C5412D53B5290061FFE0 /* Journal+CoreDataClass.swift in Sources */,
+				6348C5422D53B5290061FFE0 /* Journal+CoreDataProperties.swift in Sources */,
+				6348C5432D53B5290061FFE0 /* Entry+CoreDataClass.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -16,6 +16,13 @@ struct AddEditEntryView: View {
 	@State var titleText: String = ""
 	@State var bodyText: String = ""
 	@State var image: Image?
+	@State var entry: Entry?
+	@State var journal: Journal
+	
+	init(journal: Journal, entry: Entry? = nil) {
+		self.journal = journal
+		self.entry = entry
+	}
 	
 	var body: some View {
 		ScrollView {
@@ -75,6 +82,7 @@ struct AddEditEntryView: View {
 					
 					Button("Save") {
 						JournalController.addEntry(
+							to: journal,
 							context: context,
 							title: titleText,
 							body: bodyText,
