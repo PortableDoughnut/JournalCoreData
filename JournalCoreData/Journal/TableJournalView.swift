@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct TableJournalView: View {
-	@ObservedObject var journal: Journal
+	@Binding var journal: Journal
 	
 	var body: some View {
 		VStack {

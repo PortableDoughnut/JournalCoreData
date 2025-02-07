@@ -6,33 +6,24 @@
 //
 
 import SwiftUI
-import CoreData
+import _SwiftData_SwiftUI
 
 struct EntriesView: View {
-	@Environment(\.managedObjectContext) private var context
+	@Environment(\.modelContext) private var context
 	
 	@State private var showingAddEntry = false
 	@State private var selectedEntry: Entry?
 	
-	@ObservedObject var journal: Journal
+	@Binding var journal: Journal
 	
-	private var entries: [Entry] {
-		let request: NSFetchRequest<Entry> = Entry.fetchRequest()
-		request.predicate = NSPredicate(format: "journal == %@", journal)
-		request.sortDescriptors = [NSSortDescriptor(keyPath: \Entry.createdAt, ascending: false)]
-		
-		do {
-			return try context.fetch(request)
-		} catch {
-			print("Failed to fetch entries: \(error.localizedDescription)")
-			return []
-		}
-	}
+	@Query(sort: \Entry.createdAt, order: .reverse)
+	private var entries: [Entry]
 	
 	var body: some View {
-		NavigationView {
+		let filteredEntries = entries.filter { $0.journal == journal }
+		
 			List {
-				ForEach(entries, id: \.self) { entry in
+				ForEach(filteredEntries, id: \.self) { entry in
 					NavigationLink(destination: SingleEntryView(entry: entry)) {
 						VStack(alignment: .leading) {
 							TableEntryView(entry: entry)
@@ -46,9 +37,7 @@ struct EntriesView: View {
 				}
 				.onDelete(perform: deleteEntry)
 			}
-			.navigationTitle("Journal Entries")
-			
-		}
+			.navigationTitle(journal.title!)
 		.toolbar {
 			ToolbarItem(placement: .navigationBarTrailing) {
 				Button(action: { showingAddEntry = true }) {
@@ -57,11 +46,10 @@ struct EntriesView: View {
 			}
 		}
 		.sheet(isPresented: $showingAddEntry) {
-			AddEditEntryView(journal: journal).environment(\.managedObjectContext, context)
+			AddEditEntryView(journal: journal)
 		}
 		.sheet(item: $selectedEntry) { entry in
-			AddEditEntryView(journal: journal, entry: entry)
-				.environment(\.managedObjectContext, context)
+			AddEditEntryView(entry: entry, journal: journal)
 				.onDisappear(perform: saveContext)
 		}
 	}

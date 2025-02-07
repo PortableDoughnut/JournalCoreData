@@ -6,24 +6,22 @@
 //
 
 import SwiftUI
-import CoreData
+import SwiftData
 
 class JournalController: ObservableObject {
-	
-	let container: NSPersistentContainer
-	static var shared = JournalController()
+	let modelContainer: ModelContainer
+	@Environment(\.modelContext) private var context
 	
 	init() {
-		container = NSPersistentContainer(name: "JournalCoreData")
-		container.loadPersistentStores { (storeDescription, error) in
-			if let error = error as NSError? {
-				print("Unresolved error: \(error), \(error.userInfo)")
-			}
+		do {
+			modelContainer = try ModelContainer(for: Journal.self, Entry.self)
+		} catch {
+			fatalError("Failed to initialize SwiftData container: \(error)")
 		}
 	}
 	
-	static func addEntry(to journal: Journal, context: NSManagedObjectContext, title: String, body: String, image: UIImage? = nil) {
-		let newEntry = Entry(context: context)
+	static func addEntry(to journal: Journal, context: ModelContext, title: String, body: String, image: UIImage? = nil) {
+		let newEntry = Entry()
 		
 		newEntry.id = UUID().uuidString
 		newEntry.title = title
@@ -36,37 +34,24 @@ class JournalController: ObservableObject {
 			newEntry.imageData = inputImage.jpegData(compressionQuality: 0.8)
 		}
 		
+		context.insert(newEntry)
 		do {
 			try context.save()
-			print("Entry saved successfully!")
 		} catch {
-			let nsError = error as NSError
-			print("Unresolved error \(nsError), \(nsError.userInfo)")
+			fatalError("Could not save entry")
 		}
 	}
 	
-	static func addJournal(context: NSManagedObjectContext, title: String, colorHex: String) {
-		let newJournal = Journal(context: context)
+	static func addJournal(context: ModelContext, title: String, colorHex: String) {
+		let newJournal = Journal()
 		
 		newJournal.id = UUID().uuidString
 		newJournal.title = title
 		newJournal.createdAt = Date()
 		newJournal.colorHex = colorHex
 		
-		do {
-			try context.save()
-			print("Entry saved successfully!")
-		} catch {
-			let nsError = error as NSError
-			print("Unresolved error \(nsError), \(nsError.userInfo)")
-		}
-	}
-}
-
-extension Journal {
-	var entriesArray: [Entry] {
-		guard let all = entries?.allObjects as? [Entry] else { return [] }
-		return Array(all)
+		context.insert(newJournal)
+		try? context.save()
 	}
 }
 

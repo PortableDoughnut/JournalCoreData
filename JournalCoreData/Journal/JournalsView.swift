@@ -6,31 +6,39 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct JournalsView: View {
-	@Environment(\.managedObjectContext) private var context
-	@FetchRequest(entity: Journal.entity(), sortDescriptors: [NSSortDescriptor(keyPath: \Journal.createdAt, ascending: false)]) var journals: FetchedResults<Journal>
+	@Environment(\.modelContext) private var context
+	
+	@Query(sort: \Journal.createdAt, order: .reverse)
+	private var journals: [Journal]
 	
 	@State private var selectedJournal: Journal?
 	@State private var showingAddJournal: Bool = false
+	@State private var isEditing: Bool = false
 	
 	var body: some View {
-		NavigationView {
+		NavigationStack {
 			List {
-				ForEach(journals, id: \.objectID) {
-					journal in
-					NavigationLink(destination: EntriesView(journal: journal)) {
-						VStack(alignment: .leading) {
-							TableJournalView(journal: journal)
-						}
+				ForEach(journals) { journal in
+					NavigationLink(value: journal) {
+						TableJournalView(journal: .constant(journal))
 					}
 					.contextMenu {
 						Button("Edit") {
 							selectedJournal = journal
+							isEditing = true
+						}
+						Button("Delete", role: .destructive) {
+							deleteJournal(journal)
 						}
 					}
 				}
-				.onDelete(perform: deleteJournal)
+			}
+			.navigationDestination(for: Journal.self) {
+				journal in
+				EntriesView(journal: .constant(journal))
 			}
 			.navigationTitle("Journals")
 			.toolbar {
@@ -41,26 +49,29 @@ struct JournalsView: View {
 				}
 			}
 			.sheet(isPresented: $showingAddJournal) {
-				AddEditJournalView().environment(\.managedObjectContext, context)
+				AddEditJournalView()
+			}
+			.sheet(isPresented: $isEditing) {
+				if let selectedJournal = selectedJournal {
+					AddEditJournalView(journal: selectedJournal)
+				}
 			}
 			.onDisappear(perform: saveContext)
-			.onAppear(perform: saveContext)
 		}
 	}
 	
-	private func deleteJournal(at offsets: IndexSet) {
-		for index in offsets {
-			let journal = journals[index]
-			context.delete(journal)
-		}
+	private func deleteJournal(_ journal: Journal) {
+		context.delete(journal)
 		saveContext()
 	}
 	
 	private func saveContext() {
-		do {
-			try context.save()
-		} catch {
-			print("Failed to save: \(error.localizedDescription)")
+		if context.hasChanges {
+			do {
+				try context.save()
+			} catch {
+				print("Failed to save: \(error.localizedDescription)")
+			}
 		}
 	}
 }

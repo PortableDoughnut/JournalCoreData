@@ -6,15 +6,21 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct AddEditJournalView: View {
 	@Environment(\.dismiss) private var dismiss
-	@Environment(\.managedObjectContext) private var context
+	@Environment(\.modelContext) private var context
+	var journal: Journal?
 	
 	@State var titleText: String = ""
 	@State var colorHex: String = "#FF0000"
 	@State var showingColorPicker: Bool = false
 	@State var currentColor: Color = .green
+	
+	init(journal: Journal? = nil) {
+		self.journal = journal
+	}
 	
     var body: some View {
 		ScrollView {

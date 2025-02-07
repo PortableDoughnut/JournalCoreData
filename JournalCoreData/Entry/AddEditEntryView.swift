@@ -6,10 +6,11 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct AddEditEntryView: View {
 	@Environment(\.dismiss) private var dismiss
-	@Environment(\.managedObjectContext) private var context
+	@Environment(\.modelContext) private var context
 	
 	@State private var showingImagePicker = false
 	@State private var inputImage: UIImage?
@@ -19,13 +20,16 @@ struct AddEditEntryView: View {
 	@State var entry: Entry?
 	@State var journal: Journal
 	
-	init(journal: Journal, entry: Entry? = nil) {
-		self.journal = journal
-		self.entry = entry
-	}
+//	init(context: ModelContext, journal: Journal, entry: Entry? = nil) {
+//		self.journal = journal
+//		self.entry = entry
+//		self.context = context
+//	}
 	
 	var body: some View {
 		ScrollView {
+			Spacer()
+			
 			VStack(alignment: .leading, spacing: 20) {
 				
 				TextField("Enter Title", text: $titleText)
@@ -110,7 +114,3 @@ struct AddEditEntryView: View {
 	
 	
 }
-
-//#Preview {
-//    AddEditEntryView()
-//}

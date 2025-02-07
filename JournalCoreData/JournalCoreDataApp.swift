@@ -6,15 +6,26 @@
 //
 
 import SwiftUI
+import SwiftData
 
 @main
 struct JournalCoreDataApp: App {
-    let persistenceController = PersistenceController.shared
+	let modelContainer: ModelContainer
+	let modelContext: ModelContext
+	
+	init() {
+		do {
+			modelContainer = try .init(for: Journal.self, Entry.self)
+		} catch {
+			fatalError("Failed to initialize SwiftData container: \(error)")
+		}
+		modelContext = .init(modelContainer)
+	}
 
     var body: some Scene {
         WindowGroup {
-            JournalsView()
-				.environment(\.managedObjectContext, persistenceController.container.viewContext)
+			JournalsView()
+				.modelContainer(modelContainer)
         }
     }
 }
